@@ -19,6 +19,7 @@ import com.server.domain.video.service.dto.request.VideoGetServiceRequest;
 import com.server.domain.video.service.dto.response.*;
 import com.server.global.reponse.ApiPageResponse;
 import com.server.global.reponse.ApiSingleResponse;
+import com.server.global.reponse.RestPage;
 import com.server.global.testhelper.ControllerTest;
 import com.server.module.s3.service.dto.ImageType;
 import org.junit.jupiter.api.DisplayName;
@@ -217,7 +218,7 @@ class VideoControllerTest extends ControllerTest {
         int size = 8;
 
         List<VideoPageResponse> responses = createVideoPageResponses(size);
-        Page<VideoPageResponse> pageResponses = createPage(responses, page, size, 50);
+        RestPage<VideoPageResponse> pageResponses = createPage(responses, page, size, 50);
 
         String apiResponse = objectMapper.writeValueAsString(ApiPageResponse.ok(pageResponses, "비디오 목록 조회 성공"));
 
@@ -1392,7 +1393,7 @@ class VideoControllerTest extends ControllerTest {
         int size = 12;
 
         List<VideoPageResponse> responses = createVideoPageResponses(size);
-        Page<VideoPageResponse> pageResponses = createPage(responses, page, size, 50);
+        RestPage<VideoPageResponse> pageResponses = createPage(responses, page, size, 50);
 
         String apiResponse = objectMapper.writeValueAsString(ApiPageResponse.ok(pageResponses, "비디오 목록 조회 성공"));
 

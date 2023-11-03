@@ -17,6 +17,7 @@ import com.server.domain.video.service.dto.response.*;
 import com.server.global.annotation.LoginId;
 import com.server.global.reponse.ApiPageResponse;
 import com.server.global.reponse.ApiSingleResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +34,7 @@ import static org.springframework.http.HttpStatus.*;
 @RequestMapping("/videos")
 @RestController
 @Validated
+@Slf4j
 public class VideoController {
 
     private final QuestionService questionService;

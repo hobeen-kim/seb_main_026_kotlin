@@ -24,9 +24,11 @@ import com.server.domain.watch.repository.WatchRepository;
 import com.server.global.exception.businessexception.categoryexception.CategoryNotFoundException;
 import com.server.global.exception.businessexception.memberexception.MemberNotFoundException;
 import com.server.global.exception.businessexception.videoexception.*;
+import com.server.global.reponse.RestPage;
 import com.server.module.s3.service.AwsService;
 import com.server.module.s3.service.dto.FileType;
 import com.server.module.s3.service.dto.ImageType;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -65,7 +67,8 @@ public class VideoService {
         this.reportService = reportService;
     }
 
-    public Page<VideoPageResponse> getVideos(VideoGetServiceRequest request) {
+    @Cacheable(value = "videos", key = "#request", condition = "#request.isDefault()")
+    public RestPage<VideoPageResponse> getVideos(VideoGetServiceRequest request) {
 
         Long memberId = verifiedMemberIdOrNull(request.getLoginMemberId());
 

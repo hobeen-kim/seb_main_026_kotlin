@@ -29,6 +29,7 @@ import com.server.domain.report.controller.AdminController;
 import com.server.domain.report.controller.ReportController;
 import com.server.domain.report.service.ReportService;
 import com.server.global.initailizer.warmup.WarmupState;
+import com.server.global.reponse.RestPage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -311,7 +312,7 @@ public class ControllerTest {
 		SecurityContextHolder.setContext(securityContext);
 	}
 
-	protected <T> Page<T> createPage(List<T> contents, int page, int size, int totalElements) {
-		return new PageImpl<>(contents, PageRequest.of(page, size), totalElements);
+	protected <T> RestPage<T> createPage(List<T> contents, int page, int size, int totalElements) {
+		return new RestPage<>(contents, PageRequest.of(page, size), totalElements);
 	}
 }
