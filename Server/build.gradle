@@ -3,6 +3,10 @@ plugins {
     id 'org.springframework.boot' version '2.7.14'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
     id 'org.asciidoctor.jvm.convert' version '3.3.2'
+    id 'org.jetbrains.kotlin.jvm' version '1.6.21'
+    id 'org.jetbrains.kotlin.plugin.jpa' version '1.6.21'
+    id 'org.jetbrains.kotlin.plugin.spring' version '1.6.21'
+    id 'org.jetbrains.kotlin.kapt' version '1.6.21'
 }
 
 group = 'com.server'
@@ -75,6 +79,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
     //test container
     testImplementation group: 'org.testcontainers', name: 'testcontainers', version: '1.17.2'
+    //kotlin 용 json parser
+    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
 }
 
 jar {
@@ -122,6 +128,17 @@ test.onlyIf {
 }
 
 build.dependsOn buildTest
+
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "11"
+    }
+}
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "11"
+    }
+}
 
 //AsciiDoc
 asciidoctor {
