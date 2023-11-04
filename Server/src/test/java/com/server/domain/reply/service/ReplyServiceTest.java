@@ -420,7 +420,7 @@ class ReplyServiceTest extends ServiceTest {
                 .channel(member.getChannel())
                 .build();
 
-        Order order = Order.createOrder(member, List.of(video), 0);
+        Order order = Order.Companion.createOrder(member, List.of(video), 0);
         order.completeOrder(LocalDateTime.now(), "paymentKey");
 
         videoRepository.save(video);
@@ -592,7 +592,7 @@ class ReplyServiceTest extends ServiceTest {
                 .channel(loginMember.getChannel())
                 .build();
 
-        Order order = Order.createOrder(loginMember, List.of(video), 0);
+        Order order = Order.Companion.createOrder(loginMember, List.of(video), 0);
         order.completeOrder(LocalDateTime.now(), "paymentKey");
 
         videoRepository.save(video);
@@ -652,7 +652,7 @@ class ReplyServiceTest extends ServiceTest {
         Channel channel = createAndSaveChannel(member);
         Video video = createAndSaveOrder(member, List.of(createAndSaveVideo(channel)), 10).getVideos().get(0);
 
-        Order order = Order.createOrder(member, List.of(video), 10);
+        Order order = Order.Companion.createOrder(member, List.of(video), 10);
         order.completeOrder(LocalDateTime.now(), "paymentKey");
 
         orderRepository.save(order);

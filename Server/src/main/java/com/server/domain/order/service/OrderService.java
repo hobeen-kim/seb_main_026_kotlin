@@ -77,7 +77,7 @@ public class OrderService {
 
         checkIfVideoClosed(videos);
 
-        Order order = Order.createOrder(member, videos, request.getReward());
+        Order order = Order.Companion.createOrder(member, videos, request.getReward());
 
         if(order.getTotalPayAmount() == 0) {
             order.completeOrder(LocalDateTime.now(), "freeOrder");
@@ -118,7 +118,7 @@ public class OrderService {
 
         int totalRequest = order.getRemainRefundAmount() + order.getRemainRefundReward();
 
-        Order.Refund totalRefund = orderCancelProcess(order);
+        Order.Companion.Refund totalRefund = orderCancelProcess(order);
 
         return CancelServiceResponse.of(totalRequest, totalRefund);
     }
@@ -137,7 +137,7 @@ public class OrderService {
 
         int totalRequest = orderVideo.getPrice();
 
-        Order.Refund totalRefund = videoCancelProcess(order, orderVideo);
+        Order.Companion.Refund totalRefund = videoCancelProcess(order, orderVideo);
 
         return CancelServiceResponse.of(totalRequest, totalRefund);
     }
@@ -227,7 +227,7 @@ public class OrderService {
             throw new VideoAlreadyWatchedException();
     }
 
-    private Order.Refund orderCancelProcess(Order order) {
+    private Order.Companion.Refund orderCancelProcess(Order order) {
 
         if(!order.isComplete()) return order.cancelAllOrder();
 
@@ -235,20 +235,20 @@ public class OrderService {
 
         rewardService.cancelOrderReward(order);
 
-        Order.Refund refund = order.cancelAllOrder();
+        Order.Companion.Refund refund = order.cancelAllOrder();
 
         orderCancelRequest(order, refund.getRefundAmount());
 
         return refund;
     }
 
-    private Order.Refund videoCancelProcess(Order order, OrderVideo orderVideo) {
+    private Order.Companion.Refund videoCancelProcess(Order order, OrderVideo orderVideo) {
 
         checkIfWatchVideo(orderVideo);
 
         rewardService.cancelVideoReward(orderVideo);
 
-        Order.Refund totalRefund = order.cancelVideoOrder(orderVideo);
+        Order.Companion.Refund totalRefund = order.cancelVideoOrder(orderVideo);
 
         orderCancelRequest(order, totalRefund.getRefundAmount());
 

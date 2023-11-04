@@ -75,7 +75,7 @@ class OrderTest {
     fun createOrderRewardExceedException() {
         //given
         val member = Member.builder()
-            .reward(500)
+            .reward(1000)
             .build()
 
         val video1 = Video.builder()
@@ -112,7 +112,7 @@ class OrderTest {
         val order = Order.createOrder(member, listOf(video1, video2), 0)
 
         //when
-        val videos = order.videos
+        val videos = order.getVideos()
 
         //then
         assertThat(videos).hasSize(2)
@@ -203,8 +203,6 @@ class OrderTest {
 
         //when
         order.completeOrder(orderDate, "paymentKey")
-
-        //then
 
         //then
         Assertions.assertAll("order 상태가 completed 로 바뀐다.",
@@ -386,7 +384,7 @@ class OrderTest {
         order.completeOrder(LocalDateTime.now(), "paymentKey")
 
         //when
-        val isComplete = order.isComplete
+        val isComplete = order.isComplete()
 
         //then
         assertThat(isComplete).isTrue()
@@ -408,7 +406,7 @@ class OrderTest {
         val order = Order.createOrder(member, listOf(video1, video2), 0)
 
         //when
-        val isComplete = order.isComplete
+        val isComplete = order.isComplete()
 
         //then
         assertThat(isComplete).isFalse()

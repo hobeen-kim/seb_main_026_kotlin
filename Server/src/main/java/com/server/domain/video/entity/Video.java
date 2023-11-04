@@ -49,7 +49,7 @@ public class Video extends BaseEntity implements Rewardable {
     private Float star;
 
     @Column(nullable = false)
-    private int price;
+    public int price;
 
     @Enumerated(value = EnumType.STRING)
     @Builder.Default

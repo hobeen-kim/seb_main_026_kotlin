@@ -217,7 +217,7 @@ public abstract class ServiceTest {
                 .channel(member.getChannel())
                 .build();
 
-        Order order = Order.createOrder(member, List.of(video), 0);
+        Order order = Order.Companion.createOrder(member, List.of(video), 0);
         order.completeOrder(LocalDateTime.now(), "paymentKey");
 
         videoRepository.save(video);
@@ -241,7 +241,7 @@ public abstract class ServiceTest {
     }
 
     protected Order createAndSaveOrder(Member member, List<Video> video, int reward) {
-        Order order = Order.createOrder(member, video, reward);
+        Order order = Order.Companion.createOrder(member, video, reward);
 
         orderRepository.save(order);
 
@@ -249,7 +249,7 @@ public abstract class ServiceTest {
     }
 
     protected Order createAndSaveOrderWithPurchaseComplete(Member member, List<Video> video, int reward) {
-        Order order = Order.createOrder(member, video, reward);
+        Order order = Order.Companion.createOrder(member, video, reward);
         order.completeOrder(LocalDateTime.now(), "paymentKey");
         orderRepository.save(order);
 

@@ -219,7 +219,7 @@ public abstract class RepositoryTest {
 
     protected Order createAndSaveOrder(Member member, List<Video> video) {
 
-        Order order = Order.createOrder(member, video, 500);
+        Order order = Order.Companion.createOrder(member, video, 500);
 
         em.persist(order);
 
@@ -228,7 +228,7 @@ public abstract class RepositoryTest {
 
     protected Order createAndSaveOrderComplete(Member member, List<Video> video) {
 
-        Order order = Order.createOrder(member, video, 0);
+        Order order = Order.Companion.createOrder(member, video, 0);
         order.completeOrder(LocalDateTime.now(), "paymentKey");
         em.persist(order);
 

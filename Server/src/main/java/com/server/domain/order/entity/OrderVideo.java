@@ -20,7 +20,7 @@ public class OrderVideo extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderVideoId;
 
-    private Integer price;
+    public Integer price;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
@@ -28,10 +28,10 @@ public class OrderVideo extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "video_id")
-    private Video video;
+    public Video video;
 
     @Enumerated(EnumType.STRING)
-    private OrderStatus orderStatus = OrderStatus.ORDERED;
+    public OrderStatus orderStatus = OrderStatus.ORDERED;
 
     private OrderVideo(Order order, Video video, Integer price) {
         this.order = order;

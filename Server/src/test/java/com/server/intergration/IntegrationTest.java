@@ -147,7 +147,7 @@ public class IntegrationTest {
 		UserDetails userDetails = createUserDetails(member);
 
 		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-			userDetails, null, userDetails.getAuthorities());
+				userDetails, null, userDetails.getAuthorities());
 
 		return jwtProvider.createAccessToken(authenticationToken, accessTokenExpireTime);
 	}
@@ -156,7 +156,7 @@ public class IntegrationTest {
 		UserDetails userDetails = createUserDetails(member);
 
 		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-			userDetails, null, userDetails.getAuthorities());
+				userDetails, null, userDetails.getAuthorities());
 
 		return jwtProvider.createRefreshToken(authenticationToken, refreshTokenExpireTime);
 	}
@@ -173,22 +173,22 @@ public class IntegrationTest {
 		GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(member.getAuthority().toString());
 
 		return new CustomUserDetails(
-			member.getMemberId(),
-			String.valueOf(member.getEmail()),
-			member.getPassword(),
-			Collections.singleton(grantedAuthority)
+				member.getMemberId(),
+				String.valueOf(member.getEmail()),
+				member.getPassword(),
+				Collections.singleton(grantedAuthority)
 		);
 	}
 
 	protected Member createAndSaveMemberWithEmailPassword(String email, String password){
 
 		Member member = Member.builder()
-			.email(email)
-			.nickname(generateRandomString())
-			.password(passwordEncoder.encode(password))
-			.imageFile("imageFile")
-			.authority(Authority.ROLE_USER)
-			.build();
+				.email(email)
+				.nickname(generateRandomString())
+				.password(passwordEncoder.encode(password))
+				.imageFile("imageFile")
+				.authority(Authority.ROLE_USER)
+				.build();
 
 		return memberRepository.save(member);
 	}
@@ -196,48 +196,48 @@ public class IntegrationTest {
 	protected Member createAndSaveMemberWithEmailPasswordReward(String email, String password, int reward){
 
 		Member member = Member.builder()
-			.email(email)
-			.nickname(generateRandomString())
-			.password(passwordEncoder.encode(password))
-			.imageFile("imageFile")
-			.reward(reward)
-			.authority(Authority.ROLE_USER)
-			.build();
+				.email(email)
+				.nickname(generateRandomString())
+				.password(passwordEncoder.encode(password))
+				.imageFile("imageFile")
+				.reward(reward)
+				.authority(Authority.ROLE_USER)
+				.build();
 
 		return memberRepository.save(member);
 	}
 
 	protected Member createMemberWithEmail(String email) {
 		Member member = Member.builder()
-			.email(email)
-			.nickname(generateRandomString())
-			.password(passwordEncoder.encode("qwer1234!"))
-			.authority(Authority.ROLE_USER)
-			.build();
+				.email(email)
+				.nickname(generateRandomString())
+				.password(passwordEncoder.encode("qwer1234!"))
+				.authority(Authority.ROLE_USER)
+				.build();
 
 		return memberRepository.save(member);
 	}
 
 	protected Member createAndSaveMemberWithPassword(String password) {
 		Member member = Member.builder()
-			.email("test@email.com")
-			.nickname(generateRandomString())
-			.password(passwordEncoder.encode(password))
-			.authority(Authority.ROLE_USER)
-			.build();
+				.email("test@email.com")
+				.nickname(generateRandomString())
+				.password(passwordEncoder.encode(password))
+				.authority(Authority.ROLE_USER)
+				.build();
 
 		return memberRepository.save(member);
 	}
 
 	protected Member createAndSaveMemberWithReward(int reward) {
 		Member member = Member.builder()
-			.email("test@email.com")
-			.password("qwer1234!")
-			.nickname(generateRandomString())
-			.authority(Authority.ROLE_USER)
-			.reward(reward)
-			.imageFile("imageFile")
-			.build();
+				.email("test@email.com")
+				.password("qwer1234!")
+				.nickname(generateRandomString())
+				.authority(Authority.ROLE_USER)
+				.reward(reward)
+				.imageFile("imageFile")
+				.build();
 
 		memberRepository.save(member);
 
@@ -246,102 +246,102 @@ public class IntegrationTest {
 
 	protected Member createAndSaveMember() {
 		Member member = Member.builder()
-			.email("test@email.com")
-			.nickname(generateRandomString())
-			.password(passwordEncoder.encode("qwer1234!"))
-			.authority(Authority.ROLE_USER)
-			.build();
+				.email("test@email.com")
+				.nickname(generateRandomString())
+				.password(passwordEncoder.encode("qwer1234!"))
+				.authority(Authority.ROLE_USER)
+				.build();
 
 		return memberRepository.save(member);
 	}
 
 	protected Channel createChannel(Member member) {
 		Channel channel = Channel.builder()
-			.member(member)
-			.channelName("channelName")
-			.description("channelDescription")
-			.build();
+				.member(member)
+				.channelName("channelName")
+				.description("channelDescription")
+				.build();
 
 		return channelRepository.save(channel);
 	}
 
 	protected Channel createChannelWithRandomName(Member member) {
 		Channel channel = Channel.builder()
-			.member(member)
-			.channelName(generateRandomString())
-			.build();
+				.member(member)
+				.channelName(generateRandomString())
+				.build();
 
 		return channelRepository.save(channel);
 	}
 
 	protected Video createAndSavePaidVideo(Channel channel, int price) {
 		Video video = Video.builder()
-			.videoName(generateRandomString())
-			.description("description")
-			.thumbnailFile("thumbnailFile")
-			.videoFile("videoFile")
-			.view(0)
-			.star(0.0F)
-			.price(price)
-			.videoCategories(new ArrayList<>())
-			.videoStatus(VideoStatus.CREATED)
-			.channel(channel)
-			.questions(new ArrayList<>())
-			.build();
+				.videoName(generateRandomString())
+				.description("description")
+				.thumbnailFile("thumbnailFile")
+				.videoFile("videoFile")
+				.view(0)
+				.star(0.0F)
+				.price(price)
+				.videoCategories(new ArrayList<>())
+				.videoStatus(VideoStatus.CREATED)
+				.channel(channel)
+				.questions(new ArrayList<>())
+				.build();
 
 		return videoRepository.save(video);
 	}
 
 	protected Video createAndSaveFreeVideo(Channel channel) {
 		Video video = Video.builder()
-			.videoName(generateRandomString())
-			.description("description")
-			.thumbnailFile("thumbnailFile")
-			.videoFile("videoFile")
-			.view(0)
-			.star(0.0F)
-			.price(0)
-			.videoCategories(new ArrayList<>())
-			.videoStatus(VideoStatus.CREATED)
-			.channel(channel)
-			.questions(new ArrayList<>())
-			.build();
+				.videoName(generateRandomString())
+				.description("description")
+				.thumbnailFile("thumbnailFile")
+				.videoFile("videoFile")
+				.view(0)
+				.star(0.0F)
+				.price(0)
+				.videoCategories(new ArrayList<>())
+				.videoStatus(VideoStatus.CREATED)
+				.channel(channel)
+				.questions(new ArrayList<>())
+				.build();
 
 		return videoRepository.save(video);
 	}
 
 	protected Video createAndSaveClosedVideo(Channel channel) {
 		Video video = Video.builder()
-			.videoName(generateRandomString())
-			.description("description")
-			.thumbnailFile("thumbnailFile")
-			.videoFile("videoFile")
-			.view(0)
-			.star(0.0F)
-			.price(5000)
-			.videoCategories(new ArrayList<>())
-			.videoStatus(VideoStatus.CLOSED)
-			.channel(channel)
-			.questions(new ArrayList<>())
-			.build();
+				.videoName(generateRandomString())
+				.description("description")
+				.thumbnailFile("thumbnailFile")
+				.videoFile("videoFile")
+				.view(0)
+				.star(0.0F)
+				.price(5000)
+				.videoCategories(new ArrayList<>())
+				.videoStatus(VideoStatus.CLOSED)
+				.channel(channel)
+				.questions(new ArrayList<>())
+				.build();
 
 		return videoRepository.save(video);
 	}
 
 	protected Video createAndSavePurchasedVideo(Member member) {
 		Video video = Video.builder()
-			.videoName("title")
-			.description("description")
-			.thumbnailFile("thumbnailFile")
-			.videoFile("videoFile")
-			.view(0)
-			.star(0.0F)
-			.price(1000)
-			.videoStatus(VideoStatus.CREATED)
-			.channel(member.getChannel())
-			.build();
+				.videoName("title")
+				.description("description")
+				.thumbnailFile("thumbnailFile")
+				.videoFile("videoFile")
+				.view(0)
+				.star(0.0F)
+				.price(1000)
+				.videoStatus(VideoStatus.CREATED)
+				.channel(member.getChannel())
+				.build();
 
-		Order order = Order.createOrder(member, List.of(video), 0);
+		Order order = Order.Companion.createOrder(member, List.of(video), 0);
 		order.completeOrder(LocalDateTime.now(), "paymentKey");
 
 		videoRepository.save(video);
@@ -351,7 +351,7 @@ public class IntegrationTest {
 	}
 
 	protected Order createAndSaveOrder(Member member, List<Video> video, int reward) {
-		Order order = Order.createOrder(member, video, reward);
+		Order order = Order.Companion.createOrder(member, video, reward);
 
 		orderRepository.save(order);
 
@@ -359,7 +359,7 @@ public class IntegrationTest {
 	}
 
 	protected Order createAndSaveOrderWithPurchaseComplete(Member member, List<Video> video, int reward) {
-		Order order = Order.createOrder(member, video, reward);
+		Order order = Order.Companion.createOrder(member, video, reward);
 		order.completeOrder(LocalDateTime.now(), "paymentKey");
 		orderRepository.save(order);
 
@@ -368,9 +368,9 @@ public class IntegrationTest {
 
 	protected Subscribe createAndSaveSubscribe(Member member, Channel channel) {
 		Subscribe subscribe = Subscribe.builder()
-			.member(member)
-			.channel(channel)
-			.build();
+				.member(member)
+				.channel(channel)
+				.build();
 
 		channel.addSubscriber();
 
@@ -381,11 +381,11 @@ public class IntegrationTest {
 
 	protected Reply createAndSaveReply(Member member, Video video) {
 		Reply reply = Reply.builder()
-			.content("content")
-			.star(generateRandomStarInteger())
-			.member(member)
-			.video(video)
-			.build();
+				.content("content")
+				.star(generateRandomStarInteger())
+				.member(member)
+				.video(video)
+				.build();
 
 		replyRepository.save(reply);
 
@@ -409,12 +409,12 @@ public class IntegrationTest {
 
 	protected Question createAndSaveQuestion(Video video) {
 		Question question = Question.builder()
-			.position(1)
-			.content("content")
-			.questionAnswer("1")
-			.selections(List.of("1", "2", "3", "4", "5"))
-			.video(video)
-			.build();
+				.position(1)
+				.content("content")
+				.questionAnswer("1")
+				.selections(List.of("1", "2", "3", "4", "5"))
+				.video(video)
+				.build();
 
 		questionRepository.save(question);
 
@@ -432,9 +432,9 @@ public class IntegrationTest {
 
 		for (Category category : categories) {
 			VideoCategory videoCategory = VideoCategory.builder()
-				.video(video)
-				.category(category)
-				.build();
+					.video(video)
+					.category(category)
+					.build();
 
 			videoCategoryRepository.save(videoCategory);
 		}
@@ -442,8 +442,8 @@ public class IntegrationTest {
 
 	protected Category createAndSaveCategory(String categoryName) {
 		Category category = Category.builder()
-			.categoryName(categoryName)
-			.build();
+				.categoryName(categoryName)
+				.build();
 
 		categoryRepository.save(category);
 
@@ -452,37 +452,37 @@ public class IntegrationTest {
 
 	protected Watch createAndSaveWatch(Member member, Video video) {
 		Watch watch = Watch.builder()
-			.member(member)
-			.video(video)
-			.build();
+				.member(member)
+				.video(video)
+				.build();
 
 		return watchRepository.save(watch);
 	}
 
 	protected String getProfileUrl(Member member) {
 		return awsService.getFileUrl(
-			member.getImageFile(),
-			FileType.PROFILE_IMAGE
+				member.getImageFile(),
+				FileType.PROFILE_IMAGE
 		);
 	}
 
 	protected String getThumbnailUrl(Video video) {
 		return awsService.getFileUrl(
-			video.getThumbnailFile(),
-			FileType.THUMBNAIL
+				video.getThumbnailFile(),
+				FileType.THUMBNAIL
 		);
 	}
 
 	protected String getVideoUrl(Video video) {
 		return awsService.getFileUrl(
-			video.getVideoFile(),
-			FileType.VIDEO
+				video.getVideoFile(),
+				FileType.VIDEO
 		);
 	}
 
 	protected <T> ApiSingleResponse<T> getApiSingleResponseFromResult(ResultActions actions, Class<T> clazz) throws
-		UnsupportedEncodingException,
-		JsonProcessingException {
+			UnsupportedEncodingException,
+			JsonProcessingException {
 		String contentAsString = actions.andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
 
 		JavaType javaType = objectMapper.getTypeFactory().constructParametricType(ApiSingleResponse.class, clazz);
@@ -495,7 +495,7 @@ public class IntegrationTest {
 
 		try {
 			JavaType responseType = objectMapper.getTypeFactory().constructParametricType(ApiSingleResponse.class,
-				objectMapper.getTypeFactory().constructCollectionType(List.class, clazz));
+					objectMapper.getTypeFactory().constructCollectionType(List.class, clazz));
 
 			return objectMapper.readValue(jsonData, responseType);
 		} catch (Exception e) {

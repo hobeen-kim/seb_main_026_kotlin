@@ -15,7 +15,7 @@ public class CancelServiceResponse {
     private int totalCancelReward;
     private int usedReward;
 
-    public static CancelServiceResponse of(int totalRequest, Order.Refund refund){
+    public static CancelServiceResponse of(int totalRequest, Order.Companion.Refund refund){
         return CancelServiceResponse.builder()
                 .totalRequest(totalRequest)
                 .totalCancelAmount(refund.getRefundAmount())

@@ -2,12 +2,12 @@ package com.server.domain.order.entity
 
 import com.server.domain.member.entity.Member
 import com.server.domain.video.entity.Video
-import com.server.global.exception.businessexception.orderexception.OrderAlreadyCanceledException
-import com.server.global.exception.businessexception.orderexception.OrderNotValidException
-import com.server.global.exception.businessexception.orderexception.PriceNotMatchException
+import com.server.global.entity.BaseEntity
+import com.server.global.exception.businessexception.orderexception.*
 import java.time.LocalDateTime
 import java.util.*
 import javax.persistence.*
+
 
 @Entity(name = "orders")
 class Order(
@@ -24,7 +24,7 @@ class Order(
 
     var remainRefundReward: Int,
 
-    var completeDate: LocalDateTime?= null,
+    var completedDate: LocalDateTime?= null,
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -36,7 +36,7 @@ class Order(
 
     @OneToMany(mappedBy = "order", cascade = [CascadeType.ALL])
     val orderVideos: MutableList<OrderVideo> = mutableListOf()
-) {
+)  : BaseEntity(){
     @PrePersist
     fun generatedUuid() {
 
@@ -72,12 +72,13 @@ class Order(
     }
 
     fun completeOrder(completeDate: LocalDateTime, paymentKey: String) {
-        this.completeDate = completeDate
+        this.completedDate = completeDate
         this.paymentKey = paymentKey
         this.orderStatus = OrderStatus.COMPLETED
         this.orderVideos.forEach { it.complete() }
         this.remainRefundAmount = totalPayAmount
         this.remainRefundReward = reward
+        this.member.minusReward(reward)
     }
 
     fun cancelAllOrder(): Refund {
@@ -117,7 +118,7 @@ class Order(
         if (allVideoIsCanceled()) return cancelAllOrder()
 
         val refundAmount = calculateRefundAmount(orderVideo)
-        val refundReward = calculateRefundReward(orderVideo.video - refundAmount)
+        val refundReward = calculateRefundReward(orderVideo.price - refundAmount)
 
         this.member.addReward(refundReward)
 
@@ -154,7 +155,21 @@ class Order(
         return refundReward
     }
 
-    fun isExpired() = this.completeDate!!.plusDays(14).isBefore(LocalDateTime.now())
+    fun isExpired() = this.completedDate!!.plusDays(14).isBefore(LocalDateTime.now())
+
+    fun convertAmountToReward(reward: Int) {
+        if (remainRefundReward + remainRefundAmount < reward) {
+            throw RewardNotEnoughException()
+        }
+        if (remainRefundReward < reward) {
+            val refundReward = reward - remainRefundReward
+            remainRefundReward = 0
+            remainRefundAmount -= refundReward
+        } else {
+            remainRefundReward -= reward
+        }
+        member.addReward(reward)
+    }
 
     companion object {
         fun createOrder(
@@ -165,7 +180,7 @@ class Order(
             val totalPayAmount = videos.sumOf { it.price } - reward
 
             if (totalPayAmount < 0) {
-                throw IllegalArgumentException("결제 금액이 0보다 작습니다.")
+                throw RewardExceedException()
             }
 
             member.checkReward(reward)
